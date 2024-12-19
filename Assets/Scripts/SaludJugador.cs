@@ -22,7 +22,7 @@ public class SaludJugador : MonoBehaviour
         vidaActual -= damage;
         Debug.Log("Vida del jugador: " + vidaActual);
 
-        //interfazJuego.AparicionVidas(vidaActual);
+        // interfazJuego.AparicionVidas(vidaActual);
 
         if (vidaActual <= 0)
         {
