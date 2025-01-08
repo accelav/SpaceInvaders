@@ -11,6 +11,19 @@ public class ComportamientoJugador : MonoBehaviour
     public bool esNaveTres = false;
     public int vidaMaxima = 3;
     public int vidaActual;
+
+    public int numeroDeNave = 0;
+
+    [SerializeField]
+    GameObject proyectilJugador;
+
+    GameObject proyectil;
+
+    public float timer = 2;
+    private void Start()
+    {
+        GameManager.Instance.SaberVidaMaxima(vidaMaxima);
+    }
     void Update()
     {
         if (SceneManager.GetActiveScene().name == "Minijuego")
@@ -25,10 +38,19 @@ public class ComportamientoJugador : MonoBehaviour
             transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
         }
 
-        if (gameObject.activeSelf == true)
+        timer += Time.deltaTime;
+
+        if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            GameManager.Instance.SaberVidaMaxima(vidaMaxima);
-            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (timer >= 2)
+                {
+                    proyectil = Instantiate(proyectilJugador, gameObject.transform.position, Quaternion.identity);
+                    timer = 0;
+                }
+
+            }
         }
 
     }
@@ -39,21 +61,7 @@ public class ComportamientoJugador : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ProyectilJugador"))
         {
-            
-            if (esNaveUno) 
-            {
-                GameManager.Instance.SeleccionDeNave(0);
-            }
-            if (esNaveDos)
-            {
-                GameManager.Instance.SeleccionDeNave(1);
-            }
-            if (esNaveTres)
-            {
-                GameManager.Instance.SeleccionDeNave(2);
-            }
-            SceneManager.LoadScene("GameScene");
-            Debug.Log("Ha Coisionado");
+            GameManager.Instance.SeleccionDeNave(numeroDeNave); 
         }
     }
 

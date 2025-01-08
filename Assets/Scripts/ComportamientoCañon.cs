@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ComportamientoCañon : MonoBehaviour
 {
     float velocidad = 100;
     public float minRotation = -70f; // Límite inferior en grados
     public float maxRotation = 70f;  // Límite superior en grados
+
     void Update()
     {
         // Obtener la entrada del jugador
@@ -23,6 +25,6 @@ public class ComportamientoCañon : MonoBehaviour
 
         // Aplicar la rotación limitada
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, newRotation);
-
+  
     }
 }

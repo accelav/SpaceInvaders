@@ -32,6 +32,10 @@ public class Proyectil : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        if (other.CompareTag("Escudo"))
+        {
+            Destroy(gameObject);
+        }
     }
 
 

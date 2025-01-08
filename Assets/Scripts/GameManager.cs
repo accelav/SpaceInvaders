@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     public int vidaActual;
 
+    public int naveSeleccionada;
+    public int naveInstanciar;
+
     private void Awake()
     {
         // Configurar Singleton
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        naveInstanciar = naveSeleccionada;
     }
     public void ShowGameOverUI()
     {
@@ -44,19 +48,7 @@ public class GameManager : MonoBehaviour
 
     public void SeleccionDeNave(int nave)
     {
-        for (int i = 0; i < naves.Length; i++)
-        {
-            if (i == nave)
-            {
-                naves[i].SetActive(true);
-
-            }
-            else
-            {
-                naves[i].SetActive(false);
-            }
-        }
-
+        naveSeleccionada = nave;
     }
 
     public void GestionarVidas( int vidas)

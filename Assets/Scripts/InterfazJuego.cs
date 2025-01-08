@@ -21,7 +21,7 @@ public class InterfazJuego : MonoBehaviour
 
     private void Start()
     {
-        vidaActual = GameManager.Instance.vidaActual;
+        //vidaActual = GameManager.Instance.vidaActual;
     }
     private void Update()
     {
