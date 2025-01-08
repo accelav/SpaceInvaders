@@ -1,20 +1,24 @@
+
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GrupoEnemigos : MonoBehaviour
 {
-    public float speed = 2f; // Velocidad de movimiento horizontal
-    public float dropDistance = 0.5f; // Distancia que el grupo baja al cambiar de dirección
-    public float screenLimit = 8f; // Límite horizontal para el grupo
-    public float gameOverLimit = -4f; // Límite inferior para Game Over
+    public SpawnEnemigos spawnManager;
+    public float speed = 2f;
+    public float speedIncremented = 0;
+    public float dropDistance = 0.5f;
+    public float screenLimit = 8f;
+    public float gameOverLimit = -4f;
 
-    private int direction = 1; // Dirección inicial (1: derecha, -1: izquierda)
-    private bool isGameOver = false; // Estado del juego
+    private int direction = 1;
+    private bool isGameOver = false;
 
     void Update()
     {
-        if (isGameOver || transform.childCount == 0) return; // Si es Game Over, no hacer nada
+        if (isGameOver || transform.childCount == 0) return;
 
-        // Inicializar límites
+        // Mover y cambiar dirección
         float leftmostX = float.MaxValue;
         float rightmostX = float.MinValue;
         float bottomMostY = float.MinValue;
@@ -27,7 +31,6 @@ public class GrupoEnemigos : MonoBehaviour
                 rightmostX = Mathf.Max(rightmostX, child.position.x);
                 bottomMostY = Mathf.Max(bottomMostY, child.position.y);
 
-                // Verificar si algún enemigo alcanzó el límite inferior
                 if (bottomMostY <= gameOverLimit)
                 {
                     TriggerGameOver();
@@ -36,22 +39,68 @@ public class GrupoEnemigos : MonoBehaviour
             }
         }
 
-        // Cambiar de dirección y bajar si se alcanzan los límites
         if (rightmostX > screenLimit || leftmostX < -screenLimit)
         {
             direction *= -1;
             transform.Translate(Vector3.down * dropDistance);
         }
+        speedIncremented = speed;
+        transform.Translate(Vector3.right * direction * speedIncremented * Time.deltaTime);
 
-        // Mover el grupo horizontalmente
-        transform.Translate(Vector3.right * direction * speed * Time.deltaTime);
+        // Actualizar los cubos más bajos en cada columna que pueden disparar
+        ActualizarEnemigos(spawnManager);
     }
 
     private void TriggerGameOver()
     {
         isGameOver = true;
-        Debug.Log("¡Game Over!"); // Mostrar en la consola
-        // Aquí podrías llamar a una función para mostrar el mensaje de Game Over en la UI
-        GameManager.Instance.ShowGameOverUI(); // (Suponiendo que tengas un GameManager para manejar la UI)
+        Debug.Log("¡Game Over!");
+        // Aquí podrías añadir tu lógica de UI para Game Over.
+    }
+
+    private void ActualizarEnemigos(SpawnEnemigos spawnManager)
+    {
+        // Iterar columna por columna
+        for (int col = 0; col < spawnManager.columns; col++)
+        {
+            GameObject lowestEnemy = null;
+
+            // Iterar por filas de abajo hacia arriba
+            for (int fila = 0; fila < spawnManager.filas; fila++) // Cambié aquí a `fila++` para empezar desde abajo
+            {
+                GameObject enemy = spawnManager.enemigos[fila][col];
+
+                // Si encontramos un enemigo en esta fila, es el más bajo de la columna
+                if (enemy != null)
+                {
+                    lowestEnemy = enemy;
+                    break; // Salimos del bucle al encontrar el más bajo
+                }
+            }
+
+            // Actualizar el disparo para los enemigos en esta columna
+            for (int fila = 0; fila < spawnManager.filas; fila++)
+            {
+                GameObject enemy = spawnManager.enemigos[fila][col];
+                if (enemy != null)
+                {
+                    DisparoEnemigo disparoEnemigo = enemy.GetComponent<DisparoEnemigo>();
+                    if (disparoEnemigo != null)
+                    {
+                        disparoEnemigo.canShoot = (enemy == lowestEnemy);
+                    }
+                }
+            }
+        }
+    }
+
+    private void AjustarVelocidad()
+    {
+        // Suponiendo que empezamos con un total de enemigos iniciales
+        int totalChildren = spawnManager.filas * spawnManager.columns;
+        int remainingChildren = transform.childCount;
+
+        // Incrementar velocidad restando los enemigos eliminados
+        speed = speed + (totalChildren - remainingChildren) * 0.2f;
     }
 }

@@ -119,12 +119,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ced785818a52343b7c2f51ae00bae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocidad: 10
+  velocidad: 5
   screenLimit: 8
   esNaveUno: 1
   esNaveDos: 0
   esNaveTres: 0
-  vidaMaxima: 3
+  vidaMaxima: 5
   vidaActual: 0
   numeroDeNave: 0
   proyectilJugador: {fileID: 3520256942864573453, guid: 48c77ae498e1f474ea159b48a3f8707b,

@@ -5964,8 +5964,8 @@ MonoBehaviour:
     type: 3}
   enemyType2Prefab: {fileID: 2204371949760524485, guid: 2cc346a2c91a29342b13b5674f67a316,
     type: 3}
-  rows: 4
-  columns: 8
+  filas: 3
+  columns: 5
   spacingX: 1.5
   spacingY: 1
   startPosition: {x: -6, y: 2, z: 0}
@@ -5981,6 +5981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15b958d167a42343b8c92f801e1ccdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnManager: {fileID: 1615975589}
   speed: 0.5
   dropDistance: 0.5
   screenLimit: 7
