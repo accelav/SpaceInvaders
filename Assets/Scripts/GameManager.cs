@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,9 +10,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance; // Instancia para acceso global
     public GameObject gameOverUI; // Referencia al texto de Game Over
 
-    bool naveUno = false;
-    bool naveDos = false;
-    bool naveTres = false;
+
+    [SerializeField]
+    GameObject[] naves;
+
+    public int vidaActual;
 
     private void Awake()
     {
@@ -38,19 +42,31 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public void seleccionDeNave(int nave)
+    public void SeleccionDeNave(int nave)
     {
-        if (nave == 0)
+        for (int i = 0; i < naves.Length; i++)
         {
-            naveUno = true;
+            if (i == nave)
+            {
+                naves[i].SetActive(true);
+
+            }
+            else
+            {
+                naves[i].SetActive(false);
+            }
         }
-        if (nave == 1)
-        {
-            naveDos = true;
-        }
-        if (nave == 2)
-        {
-            naveTres = true;
-        }
+
+    }
+
+    public void GestionarVidas( int vidas)
+    {
+        vidaActual -= vidas;
+    }
+
+    public void SaberVidaMaxima( int vidaMaxima)
+    {
+        vidaActual = vidaMaxima;
+        Debug.Log(vidaMaxima);
     }
 }

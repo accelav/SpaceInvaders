@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour
     public void IniciarPartida()
     {
         Debug.Log("ha Iniciado");
-        SceneController.Instance.LoadScene("GameScene"); // Cambia "GameScene" por el nombre de tu escena de juego
+        SceneController.Instance.LoadScene("Minijuego"); // Cambia "GameScene" por el nombre de tu escena de juego
     }
 
     public void ConfigurarPartida()

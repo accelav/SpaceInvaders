@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProyectilJugador : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class ProyectilJugador : MonoBehaviour
         if (other.gameObject.CompareTag("Enemigo"))
         {
             Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            SceneManager.LoadScene("GameScene");
         }
     }
 }

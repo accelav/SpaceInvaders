@@ -5,7 +5,7 @@ using TMPro;
 
 public class InterfazJuego : MonoBehaviour
 {
-    public SaludJugador saludJugador;
+
 
     [SerializeField]
     TextMeshProUGUI textoTiempo;
@@ -21,8 +21,7 @@ public class InterfazJuego : MonoBehaviour
 
     private void Start()
     {
-        vidaMaxima = saludJugador.vidaMaxima;
-        vidaActual = saludJugador.vidaActual;
+        vidaActual = GameManager.Instance.vidaActual;
     }
     private void Update()
     {

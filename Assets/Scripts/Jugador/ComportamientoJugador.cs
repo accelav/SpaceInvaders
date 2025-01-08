@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,8 @@ public class ComportamientoJugador : MonoBehaviour
     public bool esNaveUno = false;
     public bool esNaveDos = false;
     public bool esNaveTres = false;
+    public int vidaMaxima = 3;
+    public int vidaActual;
     void Update()
     {
         if (SceneManager.GetActiveScene().name == "Minijuego")
@@ -21,28 +24,36 @@ public class ComportamientoJugador : MonoBehaviour
             float clampedX = Mathf.Clamp(transform.position.x, -screenLimit, screenLimit);
             transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
         }
-       
+
+        if (gameObject.activeSelf == true)
+        {
+            GameManager.Instance.SaberVidaMaxima(vidaMaxima);
+            
+        }
+
     }
 
 
     //Sistema de seleccion de nave en el minijuego
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.tag == "ProyectilJugador")
+        if (other.gameObject.CompareTag("ProyectilJugador"))
         {
+            
             if (esNaveUno) 
             {
-                GameManager.Instance.seleccionDeNave(0);
+                GameManager.Instance.SeleccionDeNave(0);
             }
             if (esNaveDos)
             {
-                GameManager.Instance.seleccionDeNave(1);
+                GameManager.Instance.SeleccionDeNave(1);
             }
             if (esNaveTres)
             {
-                GameManager.Instance.seleccionDeNave(2);
+                GameManager.Instance.SeleccionDeNave(2);
             }
-
+            SceneManager.LoadScene("GameScene");
+            Debug.Log("Ha Coisionado");
         }
     }
 

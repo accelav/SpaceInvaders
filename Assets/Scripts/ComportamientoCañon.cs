@@ -5,8 +5,8 @@ using UnityEngine;
 public class ComportamientoCañon : MonoBehaviour
 {
     float velocidad = 100;
-    public float minRotation = -90f; // Límite inferior en grados
-    public float maxRotation = 90f;  // Límite superior en grados
+    public float minRotation = -70f; // Límite inferior en grados
+    public float maxRotation = 70f;  // Límite superior en grados
     void Update()
     {
         // Obtener la entrada del jugador
