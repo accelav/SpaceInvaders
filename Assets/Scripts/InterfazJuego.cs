@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class InterfazJuego : MonoBehaviour
 {
@@ -19,15 +20,28 @@ public class InterfazJuego : MonoBehaviour
     int vidaMaxima;
     int vidaActual;
 
+    [SerializeField]
+    TextMeshProUGUI textoPuntos;
     private void Start()
     {
         //vidaActual = GameManager.Instance.vidaActual;
+        GameManager.Instance.estaPerdido = false;
     }
     private void Update()
     {
-        timer += Time.deltaTime;
+        
+        textoPuntos.text = GameManager.Instance.puntosActuales.ToString();
         textoTiempo.text = timer.ToString("00");
         vida = imagenVida;
+
+        if (GameManager.Instance.estaPerdido == true)
+        {
+            timer = timer;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
 
     }
     public void PausarPartida()
@@ -35,24 +49,14 @@ public class InterfazJuego : MonoBehaviour
         SceneController.Instance.TogglePause();
 
     }
-
-    public void AparicionVidas(int vidaActual)
+    public void VolverAEmpezar()
     {
-        for (int i = 0; i < vidaActual; i++)
-        {
+        SceneController.Instance.ReloadCurrentScene();
+    }
 
-            /*if (vida != null)
-            {
-                Destroy(vida);
-            }*/
-
-                Instantiate(vida, imagenVida.transform.position, Quaternion.identity);
-            
-
-            /*if (i == vidaActual)
-            {
-                return;
-            }*/
-        }
+    public void VolverMenu()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
+        SceneController.Instance.isPaused = false;
     }
 }

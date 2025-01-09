@@ -23,10 +23,18 @@ public class ProyectilJugador : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene("GameScene");
+            if (SceneManager.GetActiveScene().name != "GameScene")
+            {
+                SceneManager.LoadScene("GameScene");
+            }
+            else
+            {
+
+            }
+                
         }
     }
 }

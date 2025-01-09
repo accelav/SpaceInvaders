@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-
+    [SerializeField]
+    TextMeshProUGUI textoRecord;
     private void Start()
     {
-        
+        GameManager.Instance.ActualizarRecord();
+    }
+    private void Update()
+    {
+        textoRecord.text = GameManager.Instance.recordPuntos.ToString();
     }
     public void IniciarPartida()
     {

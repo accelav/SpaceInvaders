@@ -42,7 +42,7 @@ public class ComportamientoJugador : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "GameScene")
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton1))
             {
                 if (timer >= 2)
                 {
@@ -61,7 +61,13 @@ public class ComportamientoJugador : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ProyectilJugador"))
         {
-            GameManager.Instance.SeleccionDeNave(numeroDeNave); 
+            GameManager.Instance.SeleccionDeNave(numeroDeNave);
+            Debug.Log("Funciona");
+        }
+        if (other.gameObject.CompareTag("Proyectil"))
+        {
+            GameManager.Instance.GestionarVidas(1);
+            Debug.Log("Menos una vida");
         }
     }
 

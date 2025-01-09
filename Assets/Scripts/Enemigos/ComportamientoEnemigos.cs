@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ComportamientoEnemigos : MonoBehaviour
 {
-
+    public GrupoEnemigos grupoEnemigos;
+    public int puntos = 100;
     void Start()
     {
-        
+        grupoEnemigos = FindAnyObjectByType<GrupoEnemigos>();
     }
 
     
@@ -20,7 +21,10 @@ public class ComportamientoEnemigos : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ProyectilJugador"))
         {
+            grupoEnemigos.AjustarVelocidad(1);
+            GameManager.Instance.SumarPuntos(puntos);
+
             Destroy(gameObject);
         }
-    }
+    } 
 }

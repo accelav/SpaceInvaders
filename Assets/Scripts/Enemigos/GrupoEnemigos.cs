@@ -13,9 +13,20 @@ public class GrupoEnemigos : MonoBehaviour
 
     private int direction = 1;
     private bool isGameOver = false;
+    bool aumentaVelocidad;
+
+    public int numeroDeenemigos = 0;
+    private void Start()
+    {
+    }
 
     void Update()
     {
+        numeroDeenemigos = transform.childCount;
+        if (numeroDeenemigos <= 0)
+        {
+            GameManager.Instance.estaGanado = true;
+        }
         if (isGameOver || transform.childCount == 0) return;
 
         // Mover y cambiar dirección
@@ -45,6 +56,7 @@ public class GrupoEnemigos : MonoBehaviour
             transform.Translate(Vector3.down * dropDistance);
         }
         speedIncremented = speed;
+        
         transform.Translate(Vector3.right * direction * speedIncremented * Time.deltaTime);
 
         // Actualizar los cubos más bajos en cada columna que pueden disparar
@@ -94,13 +106,15 @@ public class GrupoEnemigos : MonoBehaviour
         }
     }
 
-    private void AjustarVelocidad()
+    public void AjustarVelocidad(int total)
     {
-        // Suponiendo que empezamos con un total de enemigos iniciales
-        int totalChildren = spawnManager.filas * spawnManager.columns;
-        int remainingChildren = transform.childCount;
+        total++;
+        if (total >= 1)
+        {
+            speed = speed + total * 0.1f;
 
-        // Incrementar velocidad restando los enemigos eliminados
-        speed = speed + (totalChildren - remainingChildren) * 0.2f;
+        }
+
+        
     }
 }

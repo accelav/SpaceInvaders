@@ -18,7 +18,7 @@ public class ComportamientoEscudo : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Proyectil"))
+        if (other.gameObject.CompareTag("Proyectil") || other.gameObject.CompareTag("ProyectilJugador"))
         {
             gameObject.SetActive(false);
         }

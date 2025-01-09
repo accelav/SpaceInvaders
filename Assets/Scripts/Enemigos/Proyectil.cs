@@ -17,7 +17,7 @@ public class Proyectil : MonoBehaviour
     void Update()
     {
         // Mover el proyectil hacia adelante según su velocidad
-        transform.Translate(Vector3.up * velocidad * Time.deltaTime);
+        transform.Translate(Vector3.down * velocidad * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)

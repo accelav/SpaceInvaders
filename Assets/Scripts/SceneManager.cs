@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
-    private bool isPaused = false; // Estado de pausa
+    public bool isPaused = false; // Estado de pausa
     private string previousScene;
 
     private void Awake()
@@ -13,11 +13,11 @@ public class SceneController : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Mantener el objeto al cambiar de escena
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Eliminar duplicados
         }
     }
 
@@ -29,6 +29,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        Time.timeScale = 1.0f;
         if (sceneName != "Options")
         {
             previousScene = SceneManager.GetActiveScene().name;
@@ -40,6 +41,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadPreviousScene()
     {
+        Time.timeScale = 1.0f;
         if (!string.IsNullOrEmpty(previousScene))
         {
             Debug.Log($"Volviendo a la escena previa: {previousScene}");
@@ -53,6 +55,7 @@ public class SceneController : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
+        Time.timeScale = 1.0f;
         string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log($"Recargando escena: {currentScene}");
         SceneManager.LoadScene(currentScene);
@@ -78,23 +81,33 @@ public class SceneController : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0f; // Detiene el tiempo
-        isPaused = true;
-        Debug.Log("Juego pausado.");
-        previousScene = SceneManager.GetActiveScene().name;
+        if (!isPaused)
+        {
+            Time.timeScale = 0f; // Detiene el tiempo
+            isPaused = true;
+            Debug.Log("Juego pausado.");
+            previousScene = SceneManager.GetActiveScene().name;
 
-        SceneManager.LoadScene("Opciones", LoadSceneMode.Additive);
-        Invoke("ManageEventSystems", 0.1f); // Asegura que se ejecute después de cargar la nueva escena
+            SceneManager.LoadScene("Opciones", LoadSceneMode.Additive);
+            ManageEventSystems(); // Ajusta los EventSystems
+        }
     }
 
     public void ResumeGame()
     {
-        Time.timeScale = 1f; // Restaura el tiempo
-        isPaused = false;
-        Debug.Log("Juego reanudado.");
+        if (isPaused)
+        {
+            Time.timeScale = 1f; // Restaura el tiempo
+            isPaused = false;
+            Debug.Log("Juego reanudado.");
 
-        SceneManager.UnloadSceneAsync("Opciones");
-        Invoke("ManageEventSystems", 0.1f); // Asegura que se ejecute después de descargar la escena
+            if (SceneManager.GetSceneByName("Opciones").isLoaded)
+            {
+                SceneManager.UnloadSceneAsync("Opciones");
+            }
+
+            ManageEventSystems(); // Ajusta los EventSystems
+        }
     }
 
     private void ManageEventSystems()
