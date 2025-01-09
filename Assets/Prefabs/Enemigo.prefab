@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1779427691398219146}
   - component: {fileID: 7284264567077360384}
   - component: {fileID: 4997254407739901995}
+  - component: {fileID: -7579371319593034974}
   - component: {fileID: 3310684279535002075}
   - component: {fileID: 498877037104620892}
   m_Layer: 0
@@ -150,6 +151,27 @@ MonoBehaviour:
     type: 3}
   minShootInterval: 1
   maxShootInterval: 5
+--- !u!114 &-7579371319593034974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2204371949760524485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a968f55d28b764bb422b519db219da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUps:
+  - {fileID: 1885836328784389284, guid: 1bb582568a520b447b5f699a4ae6d9f3, type: 3}
+  - {fileID: 5015991764844893549, guid: bdce0f8ff0ba15441a9c6bbeddc9c5b1, type: 3}
+  - {fileID: 1190871660417622555, guid: 06c1353ee86c46b4592339e2d46b330f, type: 3}
+  timer: 0
+  rangoMin: 3
+  rangoMax: 20
+  numeroAleatorio: 0
+  powerUpAleatorio: 0
 --- !u!54 &3310684279535002075
 Rigidbody:
   m_ObjectHideFlags: 0

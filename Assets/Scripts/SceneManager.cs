@@ -29,7 +29,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        Time.timeScale = 1.0f;
+        
         if (sceneName != "Options")
         {
             previousScene = SceneManager.GetActiveScene().name;
@@ -55,7 +55,7 @@ public class SceneController : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
-        Time.timeScale = 1.0f;
+        
         string currentScene = SceneManager.GetActiveScene().name;
         Debug.Log($"Recargando escena: {currentScene}");
         SceneManager.LoadScene(currentScene);

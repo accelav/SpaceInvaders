@@ -1,28 +1,52 @@
 using UnityEngine;
 
-public class InvertControls : MonoBehaviour
+public class InvertirControles : MonoBehaviour
 {
-    public float duration = 5f; // Duración del efecto en segundos.
+    //public static InvertirControles Instance;
+    public ComportamientoJugador ComportamientoJugador;
+    public float duracion = 5f; // Duración del efecto en segundos.
+    public bool estaInvirtiendo = false;
+    public float timer = 0;
+    /*private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Mantener el objeto al cambiar de escena
+        }
+        else
+        {
+            Destroy(gameObject); // Eliminar duplicados
+        }
+    }*/
 
+    private void Start()
+    {
+        ComportamientoJugador = FindAnyObjectByType<ComportamientoJugador>();
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        transform.Translate(Vector3.down * 0.01f);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                StartCoroutine(InvertPlayerControls(player));
-            }
+            timer = 0;
+            estaInvirtiendo = true;
+            ComportamientoJugador.velocidad = -ComportamientoJugador.velocidad;
             Destroy(gameObject); // Destruye el power-up después de usarlo.
+        }
+
+        if (timer >= duracion)
+        {
+            estaInvirtiendo = false;
+            ComportamientoJugador.velocidad = +ComportamientoJugador.velocidad;
         }
     }
 
-    private System.Collections.IEnumerator InvertPlayerControls(PlayerController player)
-    {
-        player.controlsInverted = true;
-        yield return new WaitForSeconds(duration);
-        player.controlsInverted = false;
-    }
 }
 
 

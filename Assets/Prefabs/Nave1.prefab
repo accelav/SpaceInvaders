@@ -153,7 +153,15 @@ MonoBehaviour:
   esNaveTres: 0
   vidaMaxima: 3
   vidaActual: 0
+  aumentoVelocidad: 0
   numeroDeNave: 0
   proyectilJugador: {fileID: 3520256942864573453, guid: 48c77ae498e1f474ea159b48a3f8707b,
     type: 3}
+  prefabBomba: {fileID: 5903166020943834550, guid: 92e9793284d0ba14794b890cee4f397d,
+    type: 3}
+  prefabExplosion: {fileID: 2851834160272315682, guid: 0d08c260f011e934b9748cd5df7fa542,
+    type: 3}
   timer: 2
+  duracionTimer: 1
+  timer2: 0
+  tiempoBomba: 2

@@ -8,6 +8,8 @@ TagManager:
   - ProyectilJugador
   - Proyectil
   - Escudo
+  - Bomba
+  - Explosion
   layers:
   - Default
   - TransparentFX

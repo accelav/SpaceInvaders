@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class InterfazJuego : MonoBehaviour
 {
 
-
+    public ComportamientoJugador ComportamientoJugador;
     [SerializeField]
     TextMeshProUGUI textoTiempo;
 
@@ -22,16 +22,21 @@ public class InterfazJuego : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI textoPuntos;
+
+    [SerializeField]
+    TextMeshProUGUI textoTiempoBomba;
     private void Start()
     {
         //vidaActual = GameManager.Instance.vidaActual;
         GameManager.Instance.estaPerdido = false;
+        ComportamientoJugador = FindAnyObjectByType<ComportamientoJugador>();
     }
     private void Update()
     {
         
         textoPuntos.text = GameManager.Instance.puntosActuales.ToString();
         textoTiempo.text = timer.ToString("00");
+        textoTiempoBomba.text = ("Tiempo Power Bomb" + ComportamientoJugador.timer2.ToString("00"));
         vida = imagenVida;
 
         if (GameManager.Instance.estaPerdido == true)
@@ -52,6 +57,7 @@ public class InterfazJuego : MonoBehaviour
     public void VolverAEmpezar()
     {
         SceneController.Instance.ReloadCurrentScene();
+        SceneController.Instance.isPaused = false;
     }
 
     public void VolverMenu()

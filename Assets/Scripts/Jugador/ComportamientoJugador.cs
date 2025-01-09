@@ -12,6 +12,7 @@ public class ComportamientoJugador : MonoBehaviour
     public int vidaMaxima = 3;
     public int vidaActual;
 
+    public bool aumentoVelocidad = false;
     public int numeroDeNave = 0;
 
     [SerializeField]
@@ -19,10 +20,23 @@ public class ComportamientoJugador : MonoBehaviour
 
     GameObject proyectil;
 
+    [SerializeField]
+    GameObject prefabBomba;
+
+    GameObject bomba;
+    [SerializeField]
+    GameObject prefabExplosion;
+    GameObject explosion;
+
     public float timer = 2;
+    public float duracionTimer = 1;
+    public float timer2 = 0;
+    public float tiempoBomba = 10;
     private void Start()
     {
+
         GameManager.Instance.SaberVidaMaxima(vidaMaxima);
+
     }
     void Update()
     {
@@ -39,17 +53,29 @@ public class ComportamientoJugador : MonoBehaviour
         }
 
         timer += Time.deltaTime;
+        timer2 += Time.deltaTime;
 
         if (SceneManager.GetActiveScene().name == "GameScene")
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton1))
             {
-                if (timer >= 2)
+                if (timer >= duracionTimer)
                 {
                     proyectil = Instantiate(proyectilJugador, gameObject.transform.position, Quaternion.identity);
+                    
                     timer = 0;
                 }
 
+                
+            }
+            if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.JoystickButton2))
+            {
+                if (timer2 >= tiempoBomba)
+                {
+                    Debug.Log("Lanzando Bomba");
+                    bomba = Instantiate(prefabBomba, gameObject.transform.position, Quaternion.identity);
+                    
+                }
             }
         }
 

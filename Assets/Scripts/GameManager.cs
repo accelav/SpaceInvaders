@@ -40,16 +40,6 @@ public class GameManager : MonoBehaviour
     {
         naveInstanciar = naveSeleccionada;
 
-        if (vidaActual <= 0 && !estaPerdido)
-        {
-            estaPerdido = true;
-            ShowGameOverUI();
-        }
-
-        if (estaGanado)
-        {
-            Debug.Log("¡Has ganado!");
-        }
     }
 
     public void ShowGameOverUI()
